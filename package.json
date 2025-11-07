@@ -1,0 +1,18 @@
+{
+  "name": "world-conquest-veterinary-home",
+  "version": "1.0.0",
+  "description": "Award-winning veterinary website with modern features including parallax scrolling and interactive animations",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000 || php -S localhost:8000 || npx http-server -p 8000"
+  },
+  "keywords": [
+    "veterinary",
+    "pet-care",
+    "parallax",
+    "modern-web",
+    "static-site"
+  ],
+  "author": "",
+  "license": "ISC"
+}
