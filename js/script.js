@@ -75,6 +75,50 @@ window.addEventListener('scroll', () => {
             heroContent.style.opacity = 1 - scrolled / 600;
         }
     }
+    
+    // Advanced Parallax for Veterinarian Profile Section
+    const vetSection = document.querySelector('.parallax-vet-section');
+    if (vetSection) {
+        const rect = vetSection.getBoundingClientRect();
+        const sectionTop = rect.top;
+        const sectionHeight = rect.height;
+        const windowHeight = window.innerHeight;
+        
+        // Only apply parallax when section is in viewport
+        if (sectionTop < windowHeight && sectionTop + sectionHeight > 0) {
+            const scrollProgress = (windowHeight - sectionTop) / (windowHeight + sectionHeight);
+            
+            // Parallax photo with depth effect
+            const vetPhoto = document.querySelector('.parallax-photo');
+            if (vetPhoto) {
+                const photoOffset = (scrollProgress - 0.5) * 50;
+                vetPhoto.style.transform = `translateZ(20px) translateY(${photoOffset}px)`;
+            }
+            
+            // Parallax background with slower movement
+            const vetBg = document.querySelector('.parallax-vet-bg');
+            if (vetBg) {
+                const bgOffset = scrollProgress * 100;
+                vetBg.style.transform = `translateY(${bgOffset}px)`;
+            }
+            
+            // Parallax decorations with different speeds
+            const decorations = document.querySelectorAll('.parallax-decoration');
+            decorations.forEach((deco, index) => {
+                const speed = 0.3 + (index * 0.15);
+                const offset = (scrollProgress - 0.5) * 80 * speed;
+                const rotation = (scrollProgress - 0.5) * 30 * speed;
+                deco.style.transform = `translateY(${offset}px) rotate(${rotation}deg)`;
+            });
+            
+            // Parallax photo background glow
+            const photoBg = document.querySelector('.parallax-photo-bg');
+            if (photoBg) {
+                const scale = 1 + (Math.sin(scrollProgress * Math.PI) * 0.1);
+                photoBg.style.transform = `scale(${scale})`;
+            }
+        }
+    }
 });
 
 // ================================
@@ -365,6 +409,60 @@ teamCards.forEach(card => {
         }
     });
 });
+
+// ================================
+// Veterinarian Image Mouse Parallax Effect
+// ================================
+const vetImageFrame = document.querySelector('.parallax-image-wrapper');
+
+if (vetImageFrame) {
+    vetImageFrame.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Calculate tilt angles
+        const rotateX = (y - centerY) / 15;
+        const rotateY = (centerX - x) / 15;
+        
+        // Apply 3D transform to the entire frame
+        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        
+        // Move decorations based on mouse position
+        const decorations = this.querySelectorAll('.parallax-decoration');
+        decorations.forEach((deco, index) => {
+            const multiplier = (index + 1) * 0.5;
+            const moveX = ((x - centerX) / centerX) * 20 * multiplier;
+            const moveY = ((y - centerY) / centerY) * 20 * multiplier;
+            deco.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+        
+        // Enhance photo with subtle movement
+        const photo = this.querySelector('.parallax-photo');
+        if (photo) {
+            const photoMoveX = ((x - centerX) / centerX) * 10;
+            const photoMoveY = ((y - centerY) / centerY) * 10;
+            photo.style.transform = `translateZ(20px) translate(${photoMoveX}px, ${photoMoveY}px) scale(1.05)`;
+        }
+    });
+    
+    vetImageFrame.addEventListener('mouseleave', function() {
+        this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        
+        const decorations = this.querySelectorAll('.parallax-decoration');
+        decorations.forEach(deco => {
+            deco.style.transform = 'translate(0, 0)';
+        });
+        
+        const photo = this.querySelector('.parallax-photo');
+        if (photo) {
+            photo.style.transform = 'translateZ(20px) translate(0, 0) scale(1)';
+        }
+    });
+}
 
 // ================================
 // Cursor Follow Effect (Optional Enhancement)

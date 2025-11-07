@@ -444,6 +444,227 @@ body {
 }
 
 /* ================================
+   Chief Veterinarian Profile Section
+   ================================ */
+.vet-profile-section {
+    background-color: var(--bg-white);
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax-vet-section {
+    position: relative;
+}
+
+.parallax-vet-bg {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 50%, rgba(240, 147, 251, 0.05) 100%);
+    animation: gradientShift 20s ease infinite;
+}
+
+.vet-profile-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.vet-profile-image {
+    position: relative;
+    perspective: 1000px;
+}
+
+.vet-image-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: visible;
+    transition: var(--transition-smooth);
+}
+
+.parallax-image-wrapper {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.parallax-photo-bg {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: var(--gradient-primary);
+    border-radius: 25px;
+    z-index: -1;
+    opacity: 0.3;
+    filter: blur(30px);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.05);
+        opacity: 0.5;
+    }
+}
+
+.vet-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+}
+
+.parallax-photo {
+    transform: translateZ(20px);
+}
+
+.vet-image-frame:hover .parallax-photo {
+    transform: translateZ(30px) scale(1.02);
+    box-shadow: 0 30px 80px rgba(102, 126, 234, 0.5);
+}
+
+.vet-image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(37, 99, 235, 0.8), transparent);
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 20px;
+}
+
+/* Parallax Decorations */
+.parallax-decoration {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0.7;
+    animation: floatDecoration 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 3;
+    transition: var(--transition-smooth);
+}
+
+.parallax-deco-1 {
+    top: 10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.parallax-deco-2 {
+    top: 30%;
+    right: -8%;
+    animation-delay: 1.5s;
+}
+
+.parallax-deco-3 {
+    bottom: 25%;
+    left: -12%;
+    animation-delay: 3s;
+}
+
+.parallax-deco-4 {
+    bottom: 10%;
+    right: -10%;
+    animation-delay: 4.5s;
+}
+
+@keyframes floatDecoration {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+    }
+    25% {
+        transform: translateY(-20px) rotate(5deg);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateY(-10px) rotate(-5deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateY(-30px) rotate(3deg);
+        opacity: 0.8;
+    }
+}
+
+.vet-image-frame:hover .parallax-decoration {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.vet-profile-text {
+    padding: 2rem 0;
+}
+
+.vet-profile-text .section-title {
+    margin-bottom: 0.5rem;
+    font-size: 3.5rem;
+}
+
+.vet-title {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.vet-bio {
+    color: var(--text-light);
+    font-size: 1.15rem;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+}
+
+.vet-credentials {
+    margin-top: 3rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.credential-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg-light);
+    border-radius: 12px;
+    transition: var(--transition-smooth);
+    border-left: 4px solid var(--primary-color);
+}
+
+.credential-item:hover {
+    background: white;
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+    transform: translateX(10px);
+}
+
+.credential-icon {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.credential-text {
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+/* ================================
    Services Section
    ================================ */
 .services-section {
@@ -953,7 +1174,8 @@ body {
     }
     
     .about-content,
-    .contact-content {
+    .contact-content,
+    .vet-profile-content {
         grid-template-columns: 1fr;
     }
     
@@ -1010,6 +1232,10 @@ body {
     
     .stats-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .vet-profile-text .section-title {
+        font-size: 2.5rem;
     }
     
     .hero-buttons {
