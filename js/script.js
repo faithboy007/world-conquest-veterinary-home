@@ -557,6 +557,270 @@ if ('IntersectionObserver' in window) {
 }
 
 // ================================
+// Paystack Payment Integration
+// ================================
+// IMPORTANT: Replace with your actual Paystack Public Key
+const PAYSTACK_PUBLIC_KEY = 'pk_test_YOUR_PUBLIC_KEY_HERE';
+
+// Create custom checkout modal
+function createCheckoutModal(productName, productPrice) {
+    // Create modal overlay
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'checkout-modal-overlay';
+    
+    // Create modal content
+    const modalContent = document.createElement('div');
+    modalContent.className = 'checkout-modal';
+    modalContent.innerHTML = `
+        <div class="checkout-modal-header">
+            <h2>🛍️ Complete Your Purchase</h2>
+            <button class="checkout-close-btn">&times;</button>
+        </div>
+        <div class="checkout-modal-body">
+            <div class="checkout-product-info">
+                <div class="checkout-product-icon">🐾</div>
+                <div class="checkout-product-details">
+                    <h3>${productName}</h3>
+                    <p class="checkout-price">₦${productPrice.toLocaleString()}</p>
+                </div>
+            </div>
+            <form class="checkout-form" id="checkoutForm">
+                <div class="checkout-form-group">
+                    <label>📧 Email Address</label>
+                    <input type="email" id="checkout-email" placeholder="your.email@example.com" required>
+                    <span class="checkout-error-msg" id="email-error"></span>
+                </div>
+                <div class="checkout-form-group">
+                    <label>👤 Full Name</label>
+                    <input type="text" id="checkout-name" placeholder="Enter your full name" required>
+                    <span class="checkout-error-msg" id="name-error"></span>
+                </div>
+                <div class="checkout-form-group">
+                    <label>📞 Phone Number</label>
+                    <input type="tel" id="checkout-phone" placeholder="080XXXXXXXX" required>
+                    <span class="checkout-error-msg" id="phone-error"></span>
+                </div>
+                <div class="checkout-form-group">
+                    <label>📦 Delivery Address (Optional)</label>
+                    <textarea id="checkout-address" placeholder="Enter your delivery address" rows="3"></textarea>
+                </div>
+                <button type="submit" class="checkout-submit-btn">
+                    <span class="checkout-btn-text">🔒 Proceed to Payment</span>
+                    <span class="checkout-btn-loader" style="display: none;">
+                        <span class="loader-spinner"></span>
+                    </span>
+                </button>
+            </form>
+        </div>
+    `;
+    
+    modalOverlay.appendChild(modalContent);
+    document.body.appendChild(modalOverlay);
+    
+    // Animate in
+    setTimeout(() => {
+        modalOverlay.style.opacity = '1';
+        modalContent.style.transform = 'translateY(0)';
+    }, 10);
+    
+    // Close button functionality
+    const closeBtn = modalContent.querySelector('.checkout-close-btn');
+    closeBtn.addEventListener('click', () => closeModal(modalOverlay));
+    
+    // Close on overlay click
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            closeModal(modalOverlay);
+        }
+    });
+    
+    // Form submission
+    const form = modalContent.querySelector('#checkoutForm');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('checkout-email').value.trim();
+        const name = document.getElementById('checkout-name').value.trim();
+        const phone = document.getElementById('checkout-phone').value.trim();
+        const address = document.getElementById('checkout-address').value.trim();
+        
+        // Validate
+        let hasError = false;
+        
+        if (!validateEmail(email)) {
+            showFieldError('email-error', 'Please enter a valid email address');
+            hasError = true;
+        } else {
+            clearFieldError('email-error');
+        }
+        
+        if (name.length < 3) {
+            showFieldError('name-error', 'Please enter your full name');
+            hasError = true;
+        } else {
+            clearFieldError('name-error');
+        }
+        
+        if (phone.length < 10) {
+            showFieldError('phone-error', 'Please enter a valid phone number');
+            hasError = true;
+        } else {
+            clearFieldError('phone-error');
+        }
+        
+        if (hasError) return;
+        
+        // Show loading state
+        const submitBtn = form.querySelector('.checkout-submit-btn');
+        const btnText = submitBtn.querySelector('.checkout-btn-text');
+        const btnLoader = submitBtn.querySelector('.checkout-btn-loader');
+        
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoader.style.display = 'inline-block';
+        
+        // Close modal and initialize payment
+        setTimeout(() => {
+            closeModal(modalOverlay);
+            initializePayment(productName, productPrice, email, name, phone, address);
+        }, 500);
+    });
+    
+    // Focus first input
+    setTimeout(() => {
+        document.getElementById('checkout-email').focus();
+    }, 300);
+}
+
+function closeModal(modalOverlay) {
+    modalOverlay.style.opacity = '0';
+    const modalContent = modalOverlay.querySelector('.checkout-modal');
+    modalContent.style.transform = 'translateY(-50px)';
+    
+    setTimeout(() => {
+        modalOverlay.remove();
+    }, 300);
+}
+
+function showFieldError(errorId, message) {
+    const errorElement = document.getElementById(errorId);
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+}
+
+function clearFieldError(errorId) {
+    const errorElement = document.getElementById(errorId);
+    errorElement.textContent = '';
+    errorElement.style.display = 'none';
+}
+
+// Handle product purchase with Paystack
+function initializePayment(productName, productPrice, email, name, phone, address) {
+    // Generate unique reference
+    const reference = 'WCV-' + Math.floor(Math.random() * 1000000000 + 1);
+    
+    // Initialize Paystack payment
+    const handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: productPrice * 100, // Paystack expects amount in kobo
+        currency: 'NGN',
+        ref: reference,
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: 'Product Name',
+                    variable_name: 'product_name',
+                    value: productName
+                },
+                {
+                    display_name: 'Customer Name',
+                    variable_name: 'customer_name',
+                    value: name
+                },
+                {
+                    display_name: 'Phone Number',
+                    variable_name: 'phone_number',
+                    value: phone
+                },
+                {
+                    display_name: 'Delivery Address',
+                    variable_name: 'delivery_address',
+                    value: address || 'Not provided'
+                }
+            ]
+        },
+        callback: function(response) {
+            // Payment successful
+            showNotification(
+                `✅ Payment successful! Reference: ${response.reference}. We'll contact you shortly for delivery.`,
+                'success'
+            );
+            
+            console.log('Payment successful:', response);
+        },
+        onClose: function() {
+            showNotification('❌ Payment cancelled', 'error');
+        }
+    });
+    
+    handler.openIframe();
+}
+
+// Email validation helper
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+// Add event listeners to all Add to Cart buttons
+const productCartButtons = document.querySelectorAll('.product-cart-btn');
+
+productCartButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const productName = this.getAttribute('data-name');
+        const productPrice = parseInt(this.getAttribute('data-price'));
+        
+        if (productName && productPrice) {
+            // Check if Paystack is loaded
+            if (typeof PaystackPop === 'undefined') {
+                showNotification('Payment system is loading, please try again in a moment', 'error');
+                return;
+            }
+            
+            // Show custom checkout modal
+            createCheckoutModal(productName, productPrice);
+        } else {
+            showNotification('Product information is missing', 'error');
+        }
+    });
+});
+
+// Optional: Backend verification function
+// Uncomment and implement when you have a backend
+/*
+function verifyPayment(reference) {
+    fetch('/verify-payment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reference: reference })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log('Payment verified:', data);
+            // Process order, send confirmation email, etc.
+        }
+    })
+    .catch(error => {
+        console.error('Verification error:', error);
+    });
+}
+*/
+
+// ================================
 // Console Welcome Message
 // ================================
 console.log('%c🐾 World Conquest Veterinary Home', 'font-size: 24px; color: #667eea; font-weight: bold;');
