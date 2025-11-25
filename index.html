@@ -7,6 +7,7 @@
     <title>World Conquest Veterinary Home | Premier Pet Care Services</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/cart.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -31,6 +32,13 @@
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="#contact" class="nav-link cta-button">Book Now</a></li>
+                <!-- Shopping Cart Icon -->
+                <li>
+                    <button class="cart-icon-btn" onclick="shoppingCart.openCart()" title="View Cart">
+                        🛒
+                        <span class="cart-count" style="display: none;">0</span>
+                    </button>
+                </li>
                 <!-- User Info & Logout (Hidden by default, shown after login) -->
                 <li id="userInfoNav" style="display: none;">
                     <span class="nav-link" id="userEmailDisplay" style="color: #10b981; font-weight: 600;"></span>
@@ -1416,6 +1424,7 @@
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script src="js/login.js"></script>
     <script src="js/auth-helpers.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
