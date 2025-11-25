@@ -1219,8 +1219,10 @@
                 <div class="footer-section">
                     <h4>Newsletter</h4>
                     <p>Subscribe for pet care tips and updates</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email">
+                    <form class="newsletter-form" id="newsletterForm" action="https://formspree.io/f/xgvbnpjd" method="POST">
+                        <input type="email" name="email" placeholder="Your email" required>
+                        <input type="hidden" name="_subject" value="Newsletter Subscription - World Conquest Veterinary Home">
+                        <input type="hidden" name="subscription" value="newsletter">
                         <button type="submit">Subscribe</button>
                     </form>
                 </div>

@@ -835,6 +835,45 @@ function verifyPayment(transactionId) {
 */
 
 // ================================
+// Newsletter Form Handler
+// ================================
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+        const email = emailInput.value.trim();
+        
+        if (!validateEmail(email)) {
+            showNotification('❌ Please enter a valid email address', 'error');
+            return;
+        }
+        
+        // Submit form via fetch
+        const formData = new FormData(this);
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                showNotification('✅ Thank you for subscribing! Check your email for pet care tips.', 'success');
+                emailInput.value = '';
+            } else {
+                showNotification('❌ Oops! Something went wrong. Please try again.', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('❌ Network error. Please check your connection.', 'error');
+        });
+    });
+}
+
+// ================================
 // Console Welcome Message
 // ================================
 console.log('%c🐾 World Conquest Veterinary Home', 'font-size: 24px; color: #667eea; font-weight: bold;');
