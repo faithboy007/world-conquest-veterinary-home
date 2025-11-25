@@ -223,14 +223,13 @@ const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
         // Get form data
         const formData = new FormData(this);
         const data = Object.fromEntries(formData);
         
         // Basic validation
         if (!data.name || !data.email || !data.phone || !data.service) {
+            e.preventDefault();
             showNotification('Please fill in all required fields', 'error');
             return;
         }
@@ -238,23 +237,19 @@ if (contactForm) {
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
+            e.preventDefault();
             showNotification('Please enter a valid email address', 'error');
             return;
         }
         
-        // Simulate form submission
+        // Show loading state
         const submitButton = this.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         submitButton.textContent = 'Sending...';
         submitButton.disabled = true;
         
-        // Simulate API call
-        setTimeout(() => {
-            showNotification('Thank you! Your message has been sent successfully. We will contact you soon!', 'success');
-            this.reset();
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-        }, 1500);
+        // Let form submit naturally to Formspree
+        // Formspree will redirect to their thank you page
     });
 }
 
@@ -557,10 +552,13 @@ if ('IntersectionObserver' in window) {
 }
 
 // ================================
-// Paystack Payment Integration
+// Flutterwave Payment Integration
 // ================================
-// IMPORTANT: Replace with your actual Paystack Public Key
-const PAYSTACK_PUBLIC_KEY = 'pk_test_YOUR_PUBLIC_KEY_HERE';
+// IMPORTANT: Replace with your actual Flutterwave Public Key
+// Get your key from: https://dashboard.flutterwave.com/settings/apis
+const FLUTTERWAVE_PUBLIC_KEY = 'FLWPUBK-4ab1929165a8ab4ffe3cdb6754a548c0-X';
+// Replace with your actual business name
+const BUSINESS_NAME = 'World Conquest Veterinary Home';
 
 // Create custom checkout modal
 function createCheckoutModal(productName, productPrice) {
@@ -714,57 +712,70 @@ function clearFieldError(errorId) {
     errorElement.style.display = 'none';
 }
 
-// Handle product purchase with Paystack
+// Handle product purchase with Flutterwave
 function initializePayment(productName, productPrice, email, name, phone, address) {
-    // Generate unique reference
-    const reference = 'WCV-' + Math.floor(Math.random() * 1000000000 + 1);
+    // Generate unique transaction reference
+    const txRef = 'WCV-' + Date.now() + '-' + Math.floor(Math.random() * 1000000);
     
-    // Initialize Paystack payment
-    const handler = PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY,
-        email: email,
-        amount: productPrice * 100, // Paystack expects amount in kobo
+    // Initialize Flutterwave payment with custom branding
+    FlutterwaveCheckout({
+        public_key: FLUTTERWAVE_PUBLIC_KEY,
+        tx_ref: txRef,
+        amount: productPrice,
         currency: 'NGN',
-        ref: reference,
-        metadata: {
-            custom_fields: [
-                {
-                    display_name: 'Product Name',
-                    variable_name: 'product_name',
-                    value: productName
-                },
-                {
-                    display_name: 'Customer Name',
-                    variable_name: 'customer_name',
-                    value: name
-                },
-                {
-                    display_name: 'Phone Number',
-                    variable_name: 'phone_number',
-                    value: phone
-                },
-                {
-                    display_name: 'Delivery Address',
-                    variable_name: 'delivery_address',
-                    value: address || 'Not provided'
-                }
-            ]
+        payment_options: 'card, banktransfer, ussd, account',
+        customer: {
+            email: email,
+            phone_number: phone,
+            name: name,
+        },
+        meta: {
+            product_name: productName,
+            delivery_address: address || 'Not provided',
+            consumer_id: email,
+        },
+        customizations: {
+            title: BUSINESS_NAME,
+            description: `🐾 Purchase: ${productName}`,
+            logo: 'https://ik.imagekit.io/esz8imvuw/Generated%20Image%20November%2007,%202025%20-%205_35PM.png?updatedAt=1762536984680',
+            // Custom colors for the modal
+            theme: {
+                color: '#667eea', // Primary purple color from your brand
+                background_color: '#ffffff',
+                button_color: '#667eea',
+                button_text_color: '#ffffff',
+            }
         },
         callback: function(response) {
             // Payment successful
-            showNotification(
-                `✅ Payment successful! Reference: ${response.reference}. We'll contact you shortly for delivery.`,
-                'success'
-            );
+            if (response.status === 'successful') {
+                showNotification(
+                    `✅ Payment successful! Transaction ID: ${response.transaction_id}. We'll contact you shortly for delivery.`,
+                    'success'
+                );
+                
+                console.log('Payment successful:', response);
+                
+                // Optional: Verify payment on your backend
+                // verifyPayment(response.transaction_id);
+            } else {
+                showNotification('❌ Payment was not completed', 'error');
+            }
             
-            console.log('Payment successful:', response);
+            // Close the payment modal
+            closePaymentModal();
         },
-        onClose: function() {
+        onclose: function() {
+            // Payment modal closed
             showNotification('❌ Payment cancelled', 'error');
-        }
+        },
     });
-    
-    handler.openIframe();
+}
+
+// Close Flutterwave modal
+function closePaymentModal() {
+    // Modal is automatically closed by Flutterwave
+    console.log('Payment modal closed');
 }
 
 // Email validation helper
@@ -782,8 +793,8 @@ productCartButtons.forEach(button => {
         const productPrice = parseInt(this.getAttribute('data-price'));
         
         if (productName && productPrice) {
-            // Check if Paystack is loaded
-            if (typeof PaystackPop === 'undefined') {
+            // Check if Flutterwave is loaded
+            if (typeof FlutterwaveCheckout === 'undefined') {
                 showNotification('Payment system is loading, please try again in a moment', 'error');
                 return;
             }
@@ -797,21 +808,24 @@ productCartButtons.forEach(button => {
 });
 
 // Optional: Backend verification function
+// IMPORTANT: Always verify payments on your backend for security
 // Uncomment and implement when you have a backend
 /*
-function verifyPayment(reference) {
-    fetch('/verify-payment', {
+function verifyPayment(transactionId) {
+    fetch('/api/verify-payment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reference: reference })
+        body: JSON.stringify({ transaction_id: transactionId })
     })
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
             console.log('Payment verified:', data);
-            // Process order, send confirmation email, etc.
+            // Process order, send confirmation email, update inventory, etc.
+        } else {
+            console.error('Payment verification failed');
         }
     })
     .catch(error => {

@@ -6,6 +6,7 @@
     <meta name="description" content="World Conquest Veterinary Home - Premier pet care services including consultation, treatment, vaccination, home service, grooming, and boarding.">
     <title>World Conquest Veterinary Home | Premier Pet Care Services</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -30,6 +31,13 @@
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="#contact" class="nav-link cta-button">Book Now</a></li>
+                <!-- User Info & Logout (Hidden by default, shown after login) -->
+                <li id="userInfoNav" style="display: none;">
+                    <span class="nav-link" id="userEmailDisplay" style="color: #10b981; font-weight: 600;"></span>
+                </li>
+                <li id="logoutNav" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn" onclick="window.wcvhLogin.logout(); return false;" style="color: #ef4444; font-weight: 600;">Logout</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -203,11 +211,857 @@
                         </div>
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">Veterinary Gloves</h3>
-                        <p class="product-description">Premium quality disposable gloves for safe and hygienic pet handling and examinations</p>
+                        <h3 class="product-name">Pet Brush</h3>
+                        <p class="product-description">Premium quality grooming brush for maintaining your pet's coat health and shine</p>
                         <div class="product-meta">
-                            <span class="product-price">₦3,000</span>
-                            <button class="product-cart-btn" data-name="Veterinary Gloves" data-price="3000">🛒 Add to Cart</button>
+                            <span class="product-price">₦1,800</span>
+                            <button class="product-cart-btn" data-name="Pet Brush" data-price="1800">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2: Deworm -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/deworm.jpg" alt="Deworm" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">BESTZOLE Deworm</h3>
+                        <p class="product-description">Effective deworming solution to keep your pets healthy and parasite-free</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦3,500</span>
+                            <button class="product-cart-btn" data-name="BESTZOLE Deworm" data-price="3500">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3: Puppy Tag -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/puppy%20tag.jpg" alt="Puppy Tag" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Puppy Tag</h3>
+                        <p class="product-description">Durable identification tag to keep your puppy safe and easily identifiable</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦2,000</span>
+                            <button class="product-cart-btn" data-name="Puppy Tag" data-price="2000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 4: Liver Tonic -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Liver%20tonic.jpg" alt="Liver Tonic" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Liver Tonic</h3>
+                        <p class="product-description">Premium liver support supplement for optimal pet health and vitality</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦9,000</span>
+                            <button class="product-cart-btn" data-name="Liver Tonic" data-price="9000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 5: Liver Tonic (Premium) -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Liver%20tonic%201.jpg" alt="Liver Tonic" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Liver Tonic (Premium)</h3>
+                        <p class="product-description">Advanced liver support formula for enhanced pet health and detoxification</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦20,000</span>
+                            <button class="product-cart-btn" data-name="Liver Tonic (Premium)" data-price="20000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 6: Parrot Mixed Seed Food -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/parrot%20mixed%20seed%20food.jpg" alt="Parrot Mixed Seed Food" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Parrot Mixed Seed Food</h3>
+                        <p class="product-description">Nutritious blend of premium seeds specially formulated for parrots</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦33,000</span>
+                            <button class="product-cart-btn" data-name="Parrot Mixed Seed Food" data-price="33000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 6: Grooming Comb -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Grooming%20comb.jpg" alt="Grooming Comb" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Grooming Comb</h3>
+                        <p class="product-description">Professional grooming comb for detangling and maintaining your pet's coat</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦8,000</span>
+                            <button class="product-cart-btn" data-name="Grooming Comb" data-price="8000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 7: Pet Toy -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/pet%20toy.jpg" alt="Pet Toy" class="product-image">
+                        <div class="product-badge">Fun</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Toy</h3>
+                        <p class="product-description">Durable and engaging toy to keep your pet entertained and active</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦4,500</span>
+                            <button class="product-cart-btn" data-name="Pet Toy" data-price="4500">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 8: Cat Litter Box -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/cat%20litter%20box.jpg" alt="Cat Litter Box" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Litter Box</h3>
+                        <p class="product-description">Spacious and hygienic litter box designed for your cat's comfort and cleanliness</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦32,000</span>
+                            <button class="product-cart-btn" data-name="Cat Litter Box" data-price="32000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 9: Nail Cutter -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/nail%20cutter.jpg" alt="Nail Cutter" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Nail Cutter</h3>
+                        <p class="product-description">Professional-grade nail cutter for safe and precise pet nail trimming</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦7,500</span>
+                            <button class="product-cart-btn" data-name="Nail Cutter" data-price="7500">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 10: Multipurpose Feeder -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/multi-purpose%20feeder.jpg" alt="Multipurpose Feeder" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Multipurpose Feeder</h3>
+                        <p class="product-description">Versatile feeding solution for multiple pet types with easy cleaning design</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦10,000</span>
+                            <button class="product-cart-btn" data-name="Multipurpose Feeder" data-price="10000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 11: Bird Cage (Large) -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Bird%20cage.jpg" alt="Bird Cage" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bird Cage (Large)</h3>
+                        <p class="product-description">Spacious and durable bird cage with premium features for your feathered friends</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦210,000</span>
+                            <button class="product-cart-btn" data-name="Bird Cage (Large)" data-price="210000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 12: Bird Cage (Medium) -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Bird%20cagee.jpg" alt="Bird Cage" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bird Cage (Medium)</h3>
+                        <p class="product-description">Comfortable and stylish bird cage perfect for medium-sized birds</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦190,000</span>
+                            <button class="product-cart-btn" data-name="Bird Cage (Medium)" data-price="190000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 13: Tick Spray -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Tick%20Spray.jpg" alt="Tick Spray" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Tick Spray</h3>
+                        <p class="product-description">Effective tick and flea prevention spray for complete pet protection</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦10,000</span>
+                            <button class="product-cart-btn" data-name="Tick Spray" data-price="10000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 14: Daily Multivitamin Tablets -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Daily%20Multivitamin%20Tablet.jpg" alt="Daily Multivitamin Tablets" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Daily Multivitamin Tablets</h3>
+                        <p class="product-description">Complete daily vitamin supplement for optimal pet health and immunity</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦15,000</span>
+                            <button class="product-cart-btn" data-name="Daily Multivitamin Tablets" data-price="15000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 15: Multivitamin for Male Pet -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Multivitamin%20for%20male%20pet.jpg" alt="Multivitamin for Male Pet" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Multivitamin for Male Pet</h3>
+                        <p class="product-description">Specialized vitamin formula designed for male pet health and vitality</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦34,000</span>
+                            <button class="product-cart-btn" data-name="Multivitamin for Male Pet" data-price="34000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 16: Multivitamin -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/multivit.jpg" alt="Multivitamin" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Multivitamin</h3>
+                        <p class="product-description">Complete multivitamin supplement for overall pet health</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦30,000</span>
+                            <button class="product-cart-btn" data-name="Multivitamin" data-price="30000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 17: Vita Pet Multivitamin -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/vita.jpg" alt="Vita Pet Multivitamin" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Vita Pet Multivitamin</h3>
+                        <p class="product-description">Complete vitamin formula for optimal pet health and vitality</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦28,000</span>
+                            <button class="product-cart-btn" data-name="Vita Pet Multivitamin" data-price="28000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 18: Pet Cloth (Style 1) -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20Client.jpg" alt="Pet Cloth" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Cloth (Style 1)</h3>
+                        <p class="product-description">Comfortable and stylish clothing to keep your pet warm and fashionable</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦12,000</span>
+                            <button class="product-cart-btn" data-name="Pet Cloth (Style 1)" data-price="12000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 16: Pet Cloth (Style 2) -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20cloth.jpg" alt="Pet Cloth" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Cloth (Style 2)</h3>
+                        <p class="product-description">Premium quality pet clothing with excellent comfort and design</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦15,000</span>
+                            <button class="product-cart-btn" data-name="Pet Cloth (Style 2)" data-price="15000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 17: Royal Canin Feed for Puppy -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Royal%20canin%20feed.jpg" alt="Royal Canin Feed for Puppy" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Royal Canin Feed for Puppy</h3>
+                        <p class="product-description">Premium quality puppy food with balanced nutrition for healthy growth</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦90,000</span>
+                            <button class="product-cart-btn" data-name="Royal Canin Feed for Puppy" data-price="90000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 18: Pet Shampoo -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20Shampoo.jpg" alt="Pet Shampoo" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Shampoo</h3>
+                        <p class="product-description">Gentle cleansing shampoo for soft, shiny, and healthy pet coat</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦15,000</span>
+                            <button class="product-cart-btn" data-name="Pet Shampoo" data-price="15000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 19: Grooming Comb (Premium) -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Grooming%20com.jpg" alt="Grooming Comb" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Grooming Comb (Premium)</h3>
+                        <p class="product-description">High-quality grooming comb with ergonomic design for easy pet care</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦12,000</span>
+                            <button class="product-cart-btn" data-name="Grooming Comb (Premium)" data-price="12000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 21: Mouth Guard -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Mouth%20guard.jpg" alt="Mouth Guard" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Mouth Guard</h3>
+                        <p class="product-description">Protective mouth guard for pet safety during training and activities</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦10,500</span>
+                            <button class="product-cart-btn" data-name="Mouth Guard" data-price="10500">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 22: Booster Puppy Feed -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Booster%20Puppy%20feed.jpg" alt="Booster Puppy Feed" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Booster Puppy Feed</h3>
+                        <p class="product-description">Nutrient-rich puppy food to boost growth and development</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦35,000</span>
+                            <button class="product-cart-btn" data-name="Booster Puppy Feed" data-price="35000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 24: Optimax Can (Pack of 24) -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Optimax%20can.jpg" alt="Optimax Can" class="product-image">
+                        <div class="product-badge">Value Pack</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Optimax Can (Pack of 24)</h3>
+                        <p class="product-description">Premium canned pet food value pack with complete nutrition</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦40,000</span>
+                            <button class="product-cart-btn" data-name="Optimax Can (Pack of 24)" data-price="40000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 25: Cat Snack -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Cat%20snack.jpg" alt="Cat Snack" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Snack</h3>
+                        <p class="product-description">Delicious and nutritious treats to reward and delight your cat</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦9,000</span>
+                            <button class="product-cart-btn" data-name="Cat Snack" data-price="9000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 26: Pet Cage (Size 4) -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20cage.jpg" alt="Pet Cage" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Cage (Size 4)</h3>
+                        <p class="product-description">Spacious and secure pet cage with durable construction for large pets</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦115,000</span>
+                            <button class="product-cart-btn" data-name="Pet Cage (Size 4)" data-price="115000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 27: Cat Litter Perfume -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Can%20litre%20Perfume.jpg" alt="Cat Litter Perfume" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Litter Perfume</h3>
+                        <p class="product-description">Fresh scent perfume to keep your cat's litter area smelling clean</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦12,000</span>
+                            <button class="product-cart-btn" data-name="Cat Litter Perfume" data-price="12000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 28: Royal Can Food (Pack of 24) -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Royal%20Can%20food.jpg" alt="Royal Can Food" class="product-image">
+                        <div class="product-badge">Value Pack</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Royal Can Food (Pack of 24)</h3>
+                        <p class="product-description">Premium canned food pack with royal quality nutrition for pets</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦40,000</span>
+                            <button class="product-cart-btn" data-name="Royal Can Food (Pack of 24)" data-price="40000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 29: Cat Litter -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Cat%20Litter.jpg" alt="Cat Litter" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Litter</h3>
+                        <p class="product-description">High-quality absorbent cat litter for odor control and easy cleaning</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦25,000</span>
+                            <button class="product-cart-btn" data-name="Cat Litter" data-price="25000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 30: Pet Plate -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20plate.jpg" alt="Pet Plate" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Plate</h3>
+                        <p class="product-description">Durable and stylish feeding plate designed for pet comfort and hygiene</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦50,000</span>
+                            <button class="product-cart-btn" data-name="Pet Plate" data-price="50000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 31: Bird Cage (Small) -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Bird%20cages.jpg" alt="Bird Cage" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bird Cage (Small)</h3>
+                        <p class="product-description">Compact and comfortable bird cage perfect for small to medium birds</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦56,000</span>
+                            <button class="product-cart-btn" data-name="Bird Cage (Small)" data-price="56000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 32: Booster Can Food (Pack of 24) -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Booster%20can%20food.jpg" alt="Booster Can Food" class="product-image">
+                        <div class="product-badge">Value Pack</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Booster Can Food (Pack of 24)</h3>
+                        <p class="product-description">Premium booster canned food pack for enhanced nutrition and growth</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦65,000</span>
+                            <button class="product-cart-btn" data-name="Booster Can Food (Pack of 24)" data-price="65000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 33: Pet Shampoo (500ml) -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20sham.jpg" alt="Pet Shampoo" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Shampoo (500ml)</h3>
+                        <p class="product-description">Gentle cleansing formula in convenient 500ml bottle for healthy pet grooming</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦9,000</span>
+                            <button class="product-cart-btn" data-name="Pet Shampoo (500ml)" data-price="9000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 34: Optimax Puppy Food (10kg) -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Optimax%20puppy%20food.jpg" alt="Optimax Puppy Food" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Optimax Puppy Food (10kg)</h3>
+                        <p class="product-description">Complete nutrition formula in 10kg pack specially designed for growing puppies</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦50,000</span>
+                            <button class="product-cart-btn" data-name="Optimax Puppy Food (10kg)" data-price="50000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 35: Pet Shoe -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/pet%20shoe.jpg" alt="Pet Shoe" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Shoe</h3>
+                        <p class="product-description">Protective footwear to keep your pet's paws safe and comfortable</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦20,000</span>
+                            <button class="product-cart-btn" data-name="Pet Shoe" data-price="20000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 36: Pet Bed -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/pet%20bed.jpg" alt="Pet Bed" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Bed</h3>
+                        <p class="product-description">Comfortable and cozy bed for your pet's restful sleep</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦40,000</span>
+                            <button class="product-cart-btn" data-name="Pet Bed" data-price="40000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 37: Cat Toy -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/cat%20toy.jpg" alt="Cat Toy" class="product-image">
+                        <div class="product-badge">Fun</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Toy</h3>
+                        <p class="product-description">Interactive toy to keep your cat entertained and active</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦30,000</span>
+                            <button class="product-cart-btn" data-name="Cat Toy" data-price="30000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 38: Pet Leash -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20leash.jpg" alt="Pet Leash" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Leash</h3>
+                        <p class="product-description">Durable leash for safe and secure walks with your pet</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦20,000</span>
+                            <button class="product-cart-btn" data-name="Pet Leash" data-price="20000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 39: Pet Harness -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20harnness.jpg" alt="Pet Harness" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Harness</h3>
+                        <p class="product-description">Comfortable harness for better control during walks</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦20,000</span>
+                            <button class="product-cart-btn" data-name="Pet Harness" data-price="20000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 40: Dekra Can Food (Pack of 24) -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/dekra%20can%20food.jpg" alt="Dekra Can Food" class="product-image">
+                        <div class="product-badge">Value Pack</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Dekra Can Food (Pack of 24)</h3>
+                        <p class="product-description">Premium Dekra canned food pack with complete nutrition</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦41,000</span>
+                            <button class="product-cart-btn" data-name="Dekra Can Food (Pack of 24)" data-price="41000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 42: Cat Food -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/cat%20food.jpg" alt="Cat Food" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Food</h3>
+                        <p class="product-description">Nutritious and balanced cat food for healthy felines</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦30,000</span>
+                            <button class="product-cart-btn" data-name="Cat Food" data-price="30000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 43: Pet Brush and Paste -->
+                <div class="product-card fade-in-up">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/pet%20brush.jpg" alt="Pet Brush and Paste" class="product-image">
+                        <div class="product-badge">Essential</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Brush and Paste</h3>
+                        <p class="product-description">Complete dental care set with brush and toothpaste for pets</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦12,000</span>
+                            <button class="product-cart-btn" data-name="Pet Brush and Paste" data-price="12000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 44: Pet Carrier -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Pet%20carrier.jpg" alt="Pet Carrier" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Carrier</h3>
+                        <p class="product-description">Secure and comfortable carrier for safe pet transportation</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦60,000</span>
+                            <button class="product-cart-btn" data-name="Pet Carrier" data-price="60000">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 45: Pet Master -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/pet%20master.jpg" alt="Pet Master" class="product-image">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pet Master</h3>
+                        <p class="product-description">Premium pet care product for comprehensive pet wellness</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦8,500</span>
+                            <button class="product-cart-btn" data-name="Pet Master" data-price="8500">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 46: Cat Nip -->
+                <div class="product-card fade-in-up delay-1">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Cat%20nip.jpg" alt="Cat Nip" class="product-image">
+                        <div class="product-badge">Fun</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cat Nip</h3>
+                        <p class="product-description">Natural catnip to stimulate play and provide enjoyment for cats</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦22,500</span>
+                            <button class="product-cart-btn" data-name="Cat Nip" data-price="22500">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 48: Bird Cage (Premium) -->
+                <div class="product-card fade-in-up delay-2">
+                    <div class="product-image-wrapper">
+                        <img src="https://ik.imagekit.io/esz8imvuw/Bird%20cag.jpg" alt="Bird Cage" class="product-image">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-overlay">
+                            <button class="product-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bird Cage (Premium)</h3>
+                        <p class="product-description">Luxurious extra-large bird cage with premium features</p>
+                        <div class="product-meta">
+                            <span class="product-price">₦380,000</span>
+                            <button class="product-cart-btn" data-name="Bird Cage (Premium)" data-price="380000">🛒 Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -262,7 +1116,7 @@
             </div>
             <div class="contact-content">
                 <div class="contact-form-wrapper fade-in-left">
-                    <form class="contact-form" id="contactForm">
+                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xgvbnpjd" method="POST">
                         <div class="form-group">
                             <input type="text" name="name" placeholder="Your Name" required>
                         </div>
@@ -289,6 +1143,8 @@
                         <div class="form-group">
                             <textarea name="message" placeholder="Additional Information" rows="4"></textarea>
                         </div>
+                        <!-- Hidden field to track form source -->
+                        <input type="hidden" name="_subject" value="New Contact Form Submission - World Conquest Veterinary">
                         <button type="submit" class="btn btn-primary btn-full">Send Message</button>
                     </form>
                 </div>
@@ -311,7 +1167,7 @@
                     <div class="info-card">
                         <div class="info-icon">✉️</div>
                         <h3>Email Us</h3>
-                        <p>worldconquestvh@gmail.com<br>Available 24/7</p>
+                        <p>worldconquestvh2065@gmail.com<br>Available 24/7</p>
                     </div>
                 </div>
             </div>
@@ -370,8 +1226,196 @@
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop">↑</button>
 
-    <!-- Paystack Inline Script -->
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="loginModalOverlay">
+        <!-- Animated Background Shapes -->
+        <div class="login-bg-shapes">
+            <div class="login-shape"></div>
+            <div class="login-shape"></div>
+            <div class="login-shape"></div>
+            <div class="login-shape"></div>
+        </div>
+        
+        <!-- Login Modal Container -->
+        <div class="login-modal-container">
+            <!-- Header -->
+            <div class="login-header">
+                <div class="login-logo">🐾</div>
+                <h2 class="login-title">Welcome!</h2>
+                <p class="login-subtitle">Login or create an account to continue</p>
+            </div>
+            
+            <!-- Body -->
+            <div class="login-body">
+                <!-- Error Message -->
+                <div class="login-error" id="loginError"></div>
+                
+                <!-- Prominent Signup Section at Top -->
+                <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                    <p style="color: white; margin: 0 0 10px 0; font-weight: 600; font-size: 14px;">🎉 New to World Conquest Veterinary?</p>
+                    <button type="button" id="signupBtnTop" style="background: white; color: #059669; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; width: 100%; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        Create Your Free Account
+                    </button>
+                </div>
+                
+                <!-- Login Form -->
+                <form class="login-form" id="loginForm">
+                    <!-- Email Field -->
+                    <div class="login-form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <div class="login-input-wrapper">
+                            <input 
+                                type="email" 
+                                id="loginEmail" 
+                                class="login-input" 
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+                            <span class="login-input-icon">📧</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Password Field -->
+                    <div class="login-form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="login-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="loginPassword" 
+                                class="login-input" 
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+                            <span class="login-input-icon">🔒</span>
+                            <button type="button" class="password-toggle" aria-label="Toggle password visibility">👁️‍🗨️</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="login-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot password?</a>
+                    </div>
+                    
+                    <!-- Login Button -->
+                    <button type="submit" class="login-btn" id="loginBtn">Login</button>
+                </form>
+            </div>
+            
+            <!-- Footer -->
+            <div class="login-footer" style="background: #f0fdf4; padding: 20px; margin: -20px -40px -40px; border-radius: 0 0 30px 30px;">
+                <strong style="color: #059669; font-size: 15px;">🎉 New user?</strong> <a href="#" id="signupLink" style="font-size: 15px; font-weight: 700;">Create your free account here!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="login-modal-overlay hidden" id="signupModalOverlay">
+        <!-- Animated Background Shapes -->
+        <div class="login-bg-shapes">
+            <div class="login-shape"></div>
+            <div class="login-shape"></div>
+            <div class="login-shape"></div>
+            <div class="login-shape"></div>
+        </div>
+        
+        <!-- Signup Modal Container -->
+        <div class="login-modal-container">
+            <!-- Header -->
+            <div class="login-header">
+                <div class="login-logo">🎉</div>
+                <h2 class="login-title">Create Your Account</h2>
+                <p class="login-subtitle">Join World Conquest Veterinary Family</p>
+            </div>
+            
+            <!-- Body -->
+            <div class="login-body">
+                <!-- Error Message -->
+                <div class="login-error" id="signupError"></div>
+                
+                <!-- Success Message -->
+                <div class="login-error" id="signupSuccess" style="display: none; background: #f0fdf4; border: 1px solid #86efac; color: #059669;"></div>
+                
+                <!-- Signup Form -->
+                <form class="login-form" id="signupForm">
+                    <!-- Email Field -->
+                    <div class="login-form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <div class="login-input-wrapper">
+                            <input 
+                                type="email" 
+                                id="signupEmail" 
+                                class="login-input" 
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+                            <span class="login-input-icon">📧</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Password Field -->
+                    <div class="login-form-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="login-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="signupPassword" 
+                                class="login-input" 
+                                placeholder="Create a password (min 6 characters)"
+                                autocomplete="new-password"
+                                required
+                            >
+                            <span class="login-input-icon">🔒</span>
+                            <button type="button" class="password-toggle" id="signupPasswordToggle" aria-label="Toggle password visibility">👁️‍🗨️</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Confirm Password Field -->
+                    <div class="login-form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <div class="login-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="signupConfirmPassword" 
+                                class="login-input" 
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                                required
+                            >
+                            <span class="login-input-icon">✔️</span>
+                            <button type="button" class="password-toggle" id="signupConfirmPasswordToggle" aria-label="Toggle password visibility">👁️‍🗨️</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Signup Button -->
+                    <button type="submit" class="login-btn" id="signupBtn">Create Account</button>
+                </form>
+            </div>
+            
+            <!-- Footer -->
+            <div class="login-footer" style="text-align: center; padding: 20px 40px 40px;">
+                Already have an account? <a href="#" id="backToLoginLink" style="color: #667eea; font-weight: 600;">Login here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+    
+    <!-- Flutterwave Inline Script -->
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/auth-helpers.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
