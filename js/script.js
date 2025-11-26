@@ -151,22 +151,27 @@ const animateCounters = () => {
         const target = parseInt(counter.getAttribute('data-target'));
         const duration = 2000; // 2 seconds
         const increment = target / (duration / 16); // 60fps
-        let current = 0;
+        let hasAnimated = false;
         
         const updateCounter = () => {
-            current += increment;
-            if (current < target) {
-                counter.textContent = Math.floor(current);
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.textContent = target;
-            }
+            let current = 0;
+            const animate = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.floor(current);
+                    requestAnimationFrame(animate);
+                } else {
+                    counter.textContent = target;
+                }
+            };
+            animate();
         };
         
         // Start animation when element is visible
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && counter.textContent === '0') {
+                if (entry.isIntersecting && !hasAnimated) {
+                    hasAnimated = true;
                     updateCounter();
                     counterObserver.unobserve(counter);
                 }
