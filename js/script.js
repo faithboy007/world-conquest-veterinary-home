@@ -147,24 +147,40 @@ animatedElements.forEach(el => observer.observe(el));
 const animateCounters = () => {
     const counters = document.querySelectorAll('.stat-number');
     
+    if (counters.length === 0) {
+        console.warn('No stat-number elements found');
+        return;
+    }
+    
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target'));
+        if (isNaN(target)) {
+            console.warn('Invalid data-target:', counter);
+            return;
+        }
+        
         const duration = 2000; // 2 seconds
         const increment = target / (duration / 16); // 60fps
         let hasAnimated = false;
         
         const updateCounter = () => {
             let current = 0;
-            const animate = () => {
-                current += increment;
-                if (current < target) {
-                    counter.textContent = Math.floor(current);
+            const startTime = performance.now();
+            
+            const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                current = progress * target;
+                counter.textContent = Math.floor(current);
+                
+                if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
                     counter.textContent = target;
                 }
             };
-            animate();
+            requestAnimationFrame(animate);
         };
         
         // Start animation when element is visible
@@ -176,13 +192,18 @@ const animateCounters = () => {
                     counterObserver.unobserve(counter);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2, rootMargin: '0px' });
         
         counterObserver.observe(counter);
     });
 };
 
-animateCounters();
+// Initialize counters after DOM is fully loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', animateCounters);
+} else {
+    animateCounters();
+}
 
 // ================================
 // Service Cards Hover Effect
