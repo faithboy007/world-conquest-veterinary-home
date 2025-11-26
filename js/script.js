@@ -329,23 +329,6 @@ style.textContent = `
 document.head.appendChild(style);
 
 // ================================
-// Newsletter Form
-// ================================
-const newsletterForm = document.querySelector('.newsletter-form');
-
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = this.querySelector('input[type="email"]').value;
-        
-        if (email) {
-            showNotification('Thank you for subscribing to our newsletter!', 'success');
-            this.reset();
-        }
-    });
-}
-
-// ================================
 // Back to Top Button
 // ================================
 const backToTopButton = document.getElementById('backToTop');
