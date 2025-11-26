@@ -92,8 +92,13 @@ body {
     align-items: center;
     gap: 10px;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--primary-color);
+}
+
+.logo-text {
+    font-weight: 900;
+    letter-spacing: -0.5px;
 }
 
 .logo-icon {
