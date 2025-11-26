@@ -144,65 +144,59 @@ animatedElements.forEach(el => observer.observe(el));
 // ================================
 // Animated Statistics Counter
 // ================================
-const animateCounters = () => {
-    const counters = document.querySelectorAll('.stat-number');
+function animateCounter(counter) {
+    const target = parseInt(counter.getAttribute('data-target'));
+    if (isNaN(target) || target === 0) return;
     
-    if (counters.length === 0) {
-        console.warn('No stat-number elements found');
-        return;
+    const duration = 2000;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = Math.floor(progress * target);
+        
+        counter.textContent = current;
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            counter.textContent = target;
+        }
     }
     
-    counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        if (isNaN(target)) {
-            console.warn('Invalid data-target:', counter);
-            return;
-        }
-        
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        let hasAnimated = false;
-        
-        const updateCounter = () => {
-            let current = 0;
-            const startTime = performance.now();
-            
-            const animate = (currentTime) => {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                current = progress * target;
-                counter.textContent = Math.floor(current);
-                
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    counter.textContent = target;
-                }
-            };
-            requestAnimationFrame(animate);
-        };
-        
-        // Start animation when element is visible
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !hasAnimated) {
-                    hasAnimated = true;
-                    updateCounter();
-                    counterObserver.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.2, rootMargin: '0px' });
-        
-        counterObserver.observe(counter);
-    });
-};
+    requestAnimationFrame(update);
+}
 
-// Initialize counters after DOM is fully loaded
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    console.log('Found counters:', counters.length);
+    
+    if (counters.length === 0) return;
+    
+    const animatedCounters = new Set();
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animatedCounters.has(entry.target)) {
+                console.log('Animating counter:', entry.target.getAttribute('data-target'));
+                animatedCounters.add(entry.target);
+                animateCounter(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
+
+// Initialize when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', animateCounters);
+    document.addEventListener('DOMContentLoaded', initCounters);
 } else {
-    animateCounters();
+    initCounters();
 }
 
 // ================================
