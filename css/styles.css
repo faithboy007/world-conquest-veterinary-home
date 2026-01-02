@@ -197,6 +197,23 @@ body {
     margin-top: 60px;
 }
 
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    background-image: url('../images/Pet-Veterinary-Logo-Design-1.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none;
+}
+
 .parallax-section {
     position: relative;
 }
@@ -1720,6 +1737,13 @@ body {
     .hero {
         margin-top: 170px;
         padding: 2rem 0;
+    }
+    
+    .hero::before {
+        width: 250px;
+        height: 250px;
+        right: -30px;
+        opacity: 0.1;
     }
     
     .hero-content {
