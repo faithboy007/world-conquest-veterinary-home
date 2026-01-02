@@ -1744,8 +1744,8 @@ body {
     }
     
     .product-image-wrapper {
-        height: 280px;
-        padding: 1.5rem;
+        height: 180px;
+        padding: 0.75rem;
     }
     
     .team-grid {
@@ -1794,7 +1794,7 @@ body {
     }
     
     .product-image-wrapper {
-        height: 320px;
-        padding: 2rem;
+        height: 200px;
+        padding: 1rem;
     }
 }
