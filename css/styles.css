@@ -1743,6 +1743,11 @@ body {
         gap: 1rem;
     }
     
+    .product-image-wrapper {
+        height: 280px;
+        padding: 1.5rem;
+    }
+    
     .team-grid {
         grid-template-columns: 1fr;
     }
@@ -1786,5 +1791,10 @@ body {
     
     .logo-text {
         font-size: 1rem;
+    }
+    
+    .product-image-wrapper {
+        height: 320px;
+        padding: 2rem;
     }
 }
