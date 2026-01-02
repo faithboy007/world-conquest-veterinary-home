@@ -1744,7 +1744,7 @@ body {
     }
     
     .product-image-wrapper {
-        height: 280px;
+        height: 840px;
         padding: 1.5rem;
     }
     
@@ -1794,7 +1794,7 @@ body {
     }
     
     .product-image-wrapper {
-        height: 320px;
+        height: 960px;
         padding: 2rem;
     }
 }
