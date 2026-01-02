@@ -117,28 +117,6 @@
                 </div>
             </div>
 
-            <!-- AI Feature Section -->
-            <div class="bg-teal-50 rounded-xl p-5 border border-teal-100 mb-8 shadow-sm">
-                <div class="flex items-center gap-2 mb-2">
-                    <div class="bg-teal-500 text-white p-1 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-teal-800 uppercase tracking-wider">AI Pet Health Assistant</h3>
-                </div>
-                <p class="text-xs text-gray-600 mb-3">Not sure if it's an emergency? Ask our AI assistant for a quick tip!</p>
-                
-                <textarea id="aiQuestion" rows="2" class="w-full text-sm p-3 rounded-lg border border-gray-200 focus:outline-none focus:border-teal-500 resize-none mb-3 placeholder-gray-400" placeholder="e.g., My puppy ate a grape, what should I do?"></textarea>
-                
-                <button onclick="askAI()" id="askBtn" class="w-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                    <span>Ask Assistant ✨</span>
-                </button>
-
-                <div id="aiResponse" class="hidden mt-3 text-sm text-gray-700 bg-white p-3 rounded-lg border border-teal-100 relative">
-                    <!-- Response goes here -->
-                </div>
-            </div>
 
             <!-- Call to Action -->
             <div class="text-center">
@@ -171,74 +149,6 @@
             }, 2000);
         }
 
-        // --- GEMINI API INTEGRATION ---
-        async function askAI() {
-            const questionInput = document.getElementById('aiQuestion');
-            const responseDiv = document.getElementById('aiResponse');
-            const btn = document.getElementById('askBtn');
-            const question = questionInput.value.trim();
-            
-            if (!question) return;
-
-            // UI Loading State
-            btn.disabled = true;
-            const originalBtnText = btn.innerHTML;
-            btn.innerHTML = '<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Consulting AI...';
-            
-            responseDiv.classList.add('hidden');
-            responseDiv.innerText = '';
-
-            try {
-                // Initialize API call
-                const apiKey = "AIzaSyCiO4DDdVHzajcUAnAqd-iPgGGa1Xcf7IE"; // Replace with your actual API key from https://makersuite.google.com/app/apikey
-                const prompt = `You are a helpful veterinary assistant for Dr. Dooyum at World Conquest Vet. 
-                                The user is asking: "${question}"
-                                
-                                Provide a brief, comforting, and professional answer (max 3-4 sentences). 
-                                IMPORTANT: ALWAYS end your response by suggesting they book an appointment with Dr. Dooyum for a full diagnosis. 
-                                Do not provide specific medical dosages or prescriptions.`;
-
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-                
-                // Retry logic for robustness
-                const fetchWithRetry = async (retries = 3, delay = 1000) => {
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                contents: [{ parts: [{ text: prompt }] }]
-                            })
-                        });
-                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                        return await response.json();
-                    } catch (err) {
-                        if (retries > 0) {
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            return fetchWithRetry(retries - 1, delay * 2);
-                        } else {
-                            throw err;
-                        }
-                    }
-                };
-
-                const data = await fetchWithRetry();
-                const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response. Please try again.";
-
-                // Display Response
-                responseDiv.innerHTML = `<span class="font-bold text-teal-600 block mb-1">AI Suggestion:</span> ${aiText}`;
-                responseDiv.classList.remove('hidden');
-
-            } catch (error) {
-                responseDiv.innerText = "Sorry, I couldn't connect to the assistant right now. Please try again later.";
-                responseDiv.classList.remove('hidden');
-                console.error(error);
-            } finally {
-                // Reset Button
-                btn.disabled = false;
-                btn.innerHTML = originalBtnText;
-            }
-        }
     </script>
 </body>
 </html>
