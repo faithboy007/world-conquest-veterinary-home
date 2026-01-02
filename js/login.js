@@ -49,6 +49,12 @@ function updateNavForLoggedInUser() {
                       localStorage.getItem('wcvh_user_email');
     
     if (userEmail) {
+        // Hide login button
+        const loginNav = document.getElementById('loginNav');
+        if (loginNav) {
+            loginNav.style.display = 'none';
+        }
+        
         // Show logout button
         const logoutNav = document.getElementById('logoutNav');
         if (logoutNav) {
@@ -68,6 +74,12 @@ function updateNavForLoggedInUser() {
 
 // Update navigation UI to hide user info and logout button
 function updateNavForLoggedOutUser() {
+    // Show login button
+    const loginNav = document.getElementById('loginNav');
+    if (loginNav) {
+        loginNav.style.display = 'block';
+    }
+    
     const logoutNav = document.getElementById('logoutNav');
     const userInfoNav = document.getElementById('userInfoNav');
     
@@ -437,8 +449,7 @@ function logout() {
                 // Update navigation to hide logout button
                 updateNavForLoggedOutUser();
                 
-                // Show login modal
-                showLoginModal();
+                // Don't force login modal - user can browse freely
             })
             .catch((error) => {
                 console.error('Logout error:', error);
@@ -446,25 +457,24 @@ function logout() {
                 localStorage.clear();
                 sessionStorage.clear();
                 updateNavForLoggedOutUser();
-                showLoginModal();
+                // Don't force login modal - user can browse freely
             });
     } else {
         // Fallback if Firebase not available
         localStorage.clear();
         sessionStorage.clear();
         updateNavForLoggedOutUser();
-        showLoginModal();
+        // Don't force login modal - user can browse freely
     }
 }
 
 // Initialize login modal
 function initLoginModal() {
-    // Check login status on page load
-    const isLoggedIn = checkLoginStatus();
+    // Check login status on page load (but don't force login)
+    checkLoginStatus();
     
-    if (!isLoggedIn) {
-        showLoginModal();
-    }
+    // Don't automatically show login modal - let users browse freely
+    // Users can still login by clicking a login button if needed
     
     // Set up event listeners
     const loginForm = document.getElementById('loginForm');
