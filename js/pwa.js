@@ -2,15 +2,32 @@
 let deferredPrompt;
 let installButton;
 
+// Check if running as installed PWA
+function isPWAInstalled() {
+  // Check if running in standalone mode
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
+    || window.navigator.standalone 
+    || document.referrer.includes('android-app://');
+  
+  console.log('PWA Status:', {
+    isStandalone: isStandalone,
+    displayMode: window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser',
+    userAgent: navigator.userAgent
+  });
+  
+  return isStandalone;
+}
+
 // Register service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then(registration => {
-        console.log('Service Worker registered successfully:', registration.scope);
+        console.log('✅ Service Worker registered successfully:', registration.scope);
+        console.log('📱 PWA is installed:', isPWAInstalled());
       })
       .catch(error => {
-        console.log('Service Worker registration failed:', error);
+        console.log('❌ Service Worker registration failed:', error);
       });
   });
 }
@@ -181,16 +198,36 @@ function createInstallUI() {
 
 // Capture the beforeinstallprompt event
 window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('🎉 beforeinstallprompt event fired! PWA is installable.');
+  
   // Prevent the default mini-infobar
   e.preventDefault();
   
   // Store the event for later use
   deferredPrompt = e;
   
+  console.log('⏱️ Install prompt will show in 5 seconds...');
+  
   // Create and show custom install prompt after a delay
   setTimeout(() => {
     showInstallPrompt();
   }, 5000); // Show after 5 seconds
+});
+
+// Log if the event doesn't fire (PWA already installed or not installable)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (!deferredPrompt && !isPWAInstalled()) {
+      console.log('⚠️ beforeinstallprompt event did not fire.');
+      console.log('Possible reasons:');
+      console.log('1. PWA is already installed');
+      console.log('2. Not served over HTTPS (except localhost)');
+      console.log('3. Browser does not support PWA installation');
+      console.log('4. User previously dismissed and browser is waiting');
+    } else if (isPWAInstalled()) {
+      console.log('✅ PWA is already installed and running in standalone mode!');
+    }
+  }, 6000);
 });
 
 // Show install prompt
