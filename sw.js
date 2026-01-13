@@ -1,5 +1,5 @@
 // IMPORTANT: Update this version number whenever you make changes to force cache refresh
-const CACHE_NAME = 'wcvh-v3';
+const CACHE_NAME = 'wcvh-v4';
 const urlsToCache = [
   '/',
   '/index.html',
