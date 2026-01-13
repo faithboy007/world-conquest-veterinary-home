@@ -1,5 +1,5 @@
 // IMPORTANT: Update this version number whenever you make changes to force cache refresh
-const CACHE_NAME = 'wcvh-v4';
+const CACHE_NAME = 'wcvh-v5';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -13,6 +13,8 @@ const urlsToCache = [
   '/js/pwa.js',
   '/js/firebase-config.js',
   '/images/Pet-Veterinary-Logo-Design-1.jpg',
+  '/images/android-launchericon-192-192.png',
+  '/images/android-launchericon-512-512.png',
   '/manifest.json'
 ];
 
